@@ -1,6 +1,6 @@
 //  This file is part of Qt Bitcoin Trader
 //      https://github.com/JulyIGHOR/QtBitcoinTrader
-//  Copyright (C) 2013-2022 July Ighor <julyighor@gmail.com>
+//  Copyright (C) 2013-2023 July Ighor <julyighor@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -191,6 +191,7 @@ private slots:
     void secondSlot();
     void indicatorValueChanged(double);
     void fileReadResult(const QByteArray& data, quint32);
+    void groupDoneSlot();
 signals:
     void eventSignal(const QString& symbol, const QString& name, double value);
     void startAppSignal(QString, QStringList);
@@ -209,6 +210,7 @@ signals:
     void performFileRead(QString, qint64, quint32);
     void performFileReadAll(QString, quint32);
     void fileReadExitLoop();
+    void groupDoneSignal();
 };
 
 #endif // SCRIPTOBJECT_H

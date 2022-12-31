@@ -1,6 +1,6 @@
 //  This file is part of Qt Bitcoin Trader
 //      https://github.com/JulyIGHOR/QtBitcoinTrader
-//  Copyright (C) 2013-2022 July Ighor <julyighor@gmail.com>
+//  Copyright (C) 2013-2023 July Ighor <julyighor@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -335,6 +335,7 @@ void IniEngine::parseExchange(const QString& exchangeFileName)
     exchangePairs.clear();
     exchangeAltPairs.clear();
     symbolByRequest.clear();
+    bool replaceRequest = baseValues.mainWindow_->exchangeId == 12;
 
     for (int n = 0; n < symbolList.size(); ++n)
     {
@@ -363,6 +364,16 @@ void IniEngine::parseExchange(const QString& exchangeFileName)
 
         if (currentPair.currRequestPair.isEmpty())
             continue;
+
+        if (replaceRequest)
+        {
+            QList<QByteArray> requestList = currentPair.currRequestPair.split('-');
+
+            if (requestList.size() == 2)
+                currentPair.currRequestPair = requestList.last() + '-' + requestList.first();
+            else
+                continue;
+        }
 
         currentPair.priceDecimals = settingsParams.value(symbolList.at(n) + "/PriceDecimals", "").toInt();
         currentPair.priceMin = settingsParams.value(symbolList.at(n) + "/PriceMin", "").toDouble();

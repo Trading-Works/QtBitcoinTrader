@@ -1,6 +1,6 @@
 //  This file is part of Qt Bitcoin Trader
 //      https://github.com/JulyIGHOR/QtBitcoinTrader
-//  Copyright (C) 2013-2022 July Ighor <julyighor@gmail.com>
+//  Copyright (C) 2013-2023 July Ighor <julyighor@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -733,6 +733,16 @@ void JulyHttp::prepareDataClear()
     }
 
     preparedList.clear();
+}
+
+void JulyHttp::setHeader(const QByteArray& header)
+{
+    httpHeader = header;
+}
+
+const QByteArray& JulyHttp::getHeader() const
+{
+    return httpHeader;
 }
 
 void JulyHttp::sendData(int reqType,

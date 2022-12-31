@@ -1,6 +1,6 @@
 //  This file is part of Qt Bitcoin Trader
 //      https://github.com/JulyIGHOR/QtBitcoinTrader
-//  Copyright (C) 2013-2022 July Ighor <julyighor@gmail.com>
+//  Copyright (C) 2013-2023 July Ighor <julyighor@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -125,6 +125,7 @@ ScriptObject::ScriptObject(const QString& _scriptName) : QObject(), scriptName(_
     connect(this, &ScriptObject::performFileRead, &performThread, &ScriptObjectThread::performFileRead);
     connect(this, &ScriptObject::performFileReadAll, &performThread, &ScriptObjectThread::performFileReadAll);
     connect(&performThread, &ScriptObjectThread::fileReadResult, this, &ScriptObject::fileReadResult);
+    connect(this, &ScriptObject::groupDoneSignal, this, &ScriptObject::groupDoneSlot, Qt::QueuedConnection);
     fileOperationNumber = 0;
     fileOpenCount = 0;
 }
@@ -471,6 +472,11 @@ void ScriptObject::groupDone()
     if (testMode)
         return;
 
+    emit groupDoneSignal();
+}
+
+void ScriptObject::groupDoneSlot()
+{
     pendingStop = true;
     emit setGroupDone(scriptName);
     setRunning(false);
